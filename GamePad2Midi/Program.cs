@@ -29,15 +29,17 @@ namespace GamePad2Midi
         public const int VELOCITY = 80;
 
         public static Dictionary<int, byte> map = new Dictionary<int, byte>(){
-            { 0, 36 },
-            { 1, 38 },
+            { 0, 38 },
+            { 1, 51 },
             { 2, 69 },
-            { 3, 51 },
-            { 6, 79 },
-            { 7, 77 },
+            { 3, 79 },
+            { 4, 48 },
+            { 5, 48 },
+            { 6, 36 },
+            { 7, 36 },
         };
 
-        public static byte[] mapHat = { 51, 69, 36, 38 };
+        public static byte[] mapHat = { 77, 71, 38, 51 };
 
         static void Main(string[] args)
         {
@@ -74,6 +76,10 @@ namespace GamePad2Midi
                 joy.Poll();
                 JoystickState state = joy.GetCurrentState();
                 if (state == null)
+                    break;
+
+                // +ボタンが押されたら終了
+                if (state.Buttons[9])
                     break;
 
                 // ボタンが押されていたらMIDIを再生
